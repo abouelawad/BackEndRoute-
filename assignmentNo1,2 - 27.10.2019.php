@@ -1,12 +1,11 @@
-
-
-
  <p> Assignment 1</p>
 
 <hr>
 
 
 <?php
+
+
 
 echo "<p>1- Days Translator </p><br/>";
 
@@ -49,8 +48,11 @@ if($userName == "ahmed" && $passWord == "123"){
 }
 
 echo "<hr/>";
+echo "<hr/>";
 
 //===============================
+
+echo "<p> Assignment 2</p>";
 
 echo "<p>3 - Tester</p><br/>";
 
