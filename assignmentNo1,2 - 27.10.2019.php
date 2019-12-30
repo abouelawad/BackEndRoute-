@@ -267,7 +267,7 @@ for($i = 0; $i < $arrlength; $i++) {
 
 echo "<hr/>";
 
-//Cheated syntacs from websites
+//Cheated syntax from websites
 
 
 $tests=array(5,4,9,3,1,7,5,8,6);;
