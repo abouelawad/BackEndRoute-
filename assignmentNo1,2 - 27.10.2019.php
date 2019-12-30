@@ -267,6 +267,34 @@ for($i = 0; $i < $arrlength; $i++) {
 
 echo "<hr/>";
 
+//Cheated syntacs from websites
+
+
+$tests=array(5,4,9,3,1,7,5,8,6);;
+
+echo "Unsorted array is: ";
+echo "<br/>";
+print_r($tests);
+echo "<br/>";
+
+for($j = 0; $j < count($tests); $j ++) {
+    for($i = 0; $i < count($tests)-1; $i ++){
+
+        if($tests[$i] > $tests[$i+1]) {
+            $temp = $tests[$i+1];
+            $tests[$i+1]=$tests[$i];
+            $tests[$i]=$temp;
+        }       
+    }
+}
+echo "<br><br><br>";
+echo "Sorted Array is: ";
+echo "<br />";
+print_r($tests);
+
+
+
+
 
 
 
