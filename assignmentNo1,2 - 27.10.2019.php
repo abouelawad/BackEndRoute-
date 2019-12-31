@@ -267,6 +267,29 @@ for($i = 0; $i < $arrlength; $i++) {
 
 echo "<hr/>";
 
+$tests=array(5,4,9,3,1,7,5,8,6);
+echo count($tests)."<br>";
+
+for ($i=0; $i < count($tests) ; $i++) { 
+	for ($j=0; $j < 6 ; $j++) { 
+		if($tests[$i] < $tests[$j]) {
+			# newVar is temporary 
+			$newVar   = $tests[$i]  ;
+			$tests[$i] = $tests[$j] ;
+			$tests[$j]   =  $newVar ;
+		}
+		
+	}
+	
+}
+
+for ($i=0; $i < count($tests); $i++) { 
+	echo $tests[$i];
+}
+
+echo "<hr/>";
+echo "<hr/>";
+
 //Cheated syntax from websites
 
 
@@ -291,14 +314,5 @@ echo "<br><br><br>";
 echo "Sorted Array is: ";
 echo "<br />";
 print_r($tests);
-
-
-
-
-
-
-
-
-
 
 ?>
