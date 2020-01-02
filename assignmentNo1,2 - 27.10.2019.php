@@ -315,4 +315,26 @@ echo "Sorted Array is: ";
 echo "<br />";
 print_r($tests);
 
+
+echo  "<hr> <br>" ;
+
+$arr1=array('a','b','c','d' ,'kk' , 'gr' , 'km');
+$arr2=array('kk', 'c','gr','d','e','f');
+$res = array();
+for ($i=0; $i <count($arr1) ; $i++) { 
+	for ($j=0 ; $j < count($arr2); $j++) { 
+		if ($arr1[$i] == $arr2[$j]) {
+
+			array_push($res,$arr1[$i] );
+		}
+	}
+		
+}
+
+for ($k=0; $k <count($res) ; $k++) { 
+		echo $res[$k];
+	if($k != count($res)-1)
+		echo " - ";
+}
+
 ?>
