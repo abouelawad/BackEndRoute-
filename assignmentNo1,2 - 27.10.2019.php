@@ -271,7 +271,7 @@ $tests=array(5,4,9,3,1,7,5,8,6);
 echo count($tests)."<br>";
 
 for ($i=0; $i < count($tests) ; $i++) { 
-	for ($j=0; $j < 6 ; $j++) { 
+	for ($j=0; $j < count($tests) ; $j++) { 
 		if($tests[$i] < $tests[$j]) {
 			# newVar is temporary 
 			$newVar   = $tests[$i]  ;
