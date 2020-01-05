@@ -1,20 +1,18 @@
 <?php
 
 
- // session_start();
+ 	// session_start();
 
 	if (is_numeric($_POST['price']) != true ||  is_numeric($_POST['amount']) != true){
 
-		echo "YOU SHOULD ENTER NUMBERS ONLY No Strings";
+		echo "YOU SHOULD ENTER NUMBERS ONLY 'NO STRINGS';
 		
 	
 
 	}elseif ($_POST['price']< 0 || $_POST['amount'] < 0 ) {
-		echo "PLEASE ENTER   +ve VALUE <BR>";
+		echo "PLEASE ENTER +ve VALUE <BR>";
 		
 	}else{
-	#checker
-	// echo "yes";
 
 	$price = $_POST['price'];
 	$amount = $_POST['amount'];
@@ -32,15 +30,6 @@
 	$discount_10 = ($total-($total * 0.10));
 	$discount_15 = ($total-($total * 0.15));
 
-
-
-
-	#checker
-	// echo ((int) $price) . "<br>";
-
-	// echo gettype($price) . " " . $price ."<br>";
-
-	// echo gettype($total)."<br>";
 
 
 
