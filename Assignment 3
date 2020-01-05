@@ -1,0 +1,55 @@
+<?php
+
+
+session_start();
+
+if (is_numeric($_POST['price'])){
+
+	#checker
+	// echo "yes";
+
+	$price = $_POST['price'];
+	$amount = $_POST['amount'];
+
+
+	$_SESSION["price"] = $price ;
+	$_SESSION["amount"] = $amount ;
+
+
+	$check_integer = $price * $amount;
+
+
+	$total = $price * $amount;
+	$discount_10 = ($total-($total * 0.10));
+	$discount_15 = ($total-($total * 0.15));
+
+
+
+
+	#checker
+	// echo ((int) $price) . "<br>";
+
+	// echo gettype($price) . " " . $price ."<br>";
+
+	// echo gettype($total)."<br>";
+
+
+
+		if ($total<0) {
+			echo "You Entered A -ve Value <br> SORRY , PURCHASE is not allowed <BR> ";
+			echo "PLEASE ENTER a +ve VALUE <BR>";
+
+		} else if ($total > 1000) {
+			echo "Total price is " . $total . " $.<br>";
+
+			echo "You have 15% discount - Please pay Only <br> " . round($discount_15, 2)  . " $ <br>"; 
+		} else if ($total <= 1000) { 
+
+			echo "Total price is " . $total . " $.<br>";
+
+			echo "You have 10% discount - Please pay Only <br>" . round($discount_10, 2)  . " $ <br>"; 
+		}
+} else {
+
+	echo "YOU SHOULD ENTER NUMBERS ONLY";
+}
