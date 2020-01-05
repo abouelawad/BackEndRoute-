@@ -1,10 +1,18 @@
 <?php
 
 
-session_start();
+ // session_start();
 
-if (is_numeric($_POST['price'])){
+	if (is_numeric($_POST['price']) != true ||  is_numeric($_POST['amount']) != true){
 
+		echo "YOU SHOULD ENTER NUMBERS ONLY No Strings";
+		
+	
+
+	}elseif ($_POST['price']< 0 || $_POST['amount'] < 0 ) {
+		echo "PLEASE ENTER   +ve VALUE <BR>";
+		
+	}else{
 	#checker
 	// echo "yes";
 
@@ -12,14 +20,15 @@ if (is_numeric($_POST['price'])){
 	$amount = $_POST['amount'];
 
 
-	$_SESSION["price"] = $price ;
-	$_SESSION["amount"] = $amount ;
+	// $_SESSION["price"] = $price ;
+	// $_SESSION["amount"] = $amount ;
 
 
-	$check_integer = $price * $amount;
+	
 
 
 	$total = $price * $amount;
+
 	$discount_10 = ($total-($total * 0.10));
 	$discount_15 = ($total-($total * 0.15));
 
@@ -48,8 +57,8 @@ if (is_numeric($_POST['price'])){
 			echo "Total price is " . $total . " $.<br>";
 
 			echo "You have 10% discount - Please pay Only <br>" . round($discount_10, 2)  . " $ <br>"; 
-		}
-} else {
+		
+		} 
+}	
+	
 
-	echo "YOU SHOULD ENTER NUMBERS ONLY";
-}
