@@ -9,16 +9,15 @@
 	<input type="submit" value="submit">
 </form>
 
+
 <!--========================== -->
 
 02-handel-login.php
 
-
 <?php
 
 
-$username = 'abou';
-$password = 'abou';
+
 
 session_start();
 
@@ -27,14 +26,21 @@ if (isset($_SESSION['abou'])) {
 
 	echo "welcome mr. " . $_SESSION['abou'] . "<br>";
 
-	echo "<a href='04-items.php'>Go Check Items</a>" ;
+	echo "<a href='04-items.php'>Go Check Items</a><br>" ;
+	echo "<a href='06-logout.php'>logout</a><br>" ;
 
 }else{
+
+		$username = 'abou';
+		$password = 'abou';
+
 	if($_POST['username'] == $username  && $_POST['password'] == $password  ){
 
 		$_SESSION['abou'] = $username;
 		echo "welcome mr. " . $_SESSION['abou']  . "<br>";
-		echo "<a href='04-items.php'>Gooo Check Items</a>" ;
+		echo "<a href='04-items.php'>Go Check Items</a>" ;
+		echo "<a href='06-logout.php'>logout</a>" ;
+
 
 
 
@@ -54,8 +60,6 @@ if (isset($_SESSION['abou'])) {
 
 
 04-items.php
-
-
 
 <?php
 
@@ -86,6 +90,8 @@ session_start();
 			<input type="text"  name="price" placeholder="ENTER PRICE"   >
 			<input type="text" name="amount" placeholder="ENTER AMOUNT" >
 			<input type="submit" name="select" value="SELECT">
+			
+			<a href='06-logout.php'><input type="button" name="logout" value="logout"></a>
 
 		</form>
 <?php
@@ -102,14 +108,18 @@ session_start();
 	
 
 
+
+
+
+
 <!-- pattern="\d+" min="0" -->
+
+
 
 
 <!-- ========================== -->
 
-
 05-calculation.php
-
 
 
 <?php
@@ -153,13 +163,15 @@ if (isset($_SESSION['abou'])) {
 			echo "Total price is " . $total . " $.<br>";
 
 			echo "You have 15% discount - Please pay Only <br> " . round($discount_15, 2)  . " $ <br>"; 
-			echo "<a href='06-logout.php'>logout</a>" ;
+			echo "<a href='04-items.php'>go back</a><br>";
+			echo "<a href='06-logout.php'>logout</a><br>" ;
 		} else if ($total <= 1000) { 
 
 			echo "Total price is " . $total . " $.<br>";
 
 			echo "You have 10% discount - Please pay Only <br>" . round($discount_10, 2)  . " $ <br>"; 
-			echo "<a href='06-logout.php'>logout</a>" ;
+			echo "<a href='04-items.php'>go back</a><br>";
+			echo "<a href='06-logout.php'>logout</a><br>" ;
 			
 		}
 	}
@@ -169,6 +181,9 @@ if (isset($_SESSION['abou'])) {
 	echo "<script> location.href='01-login.php'</script>";
 
 }	
+
+
+	
 
 
 	
