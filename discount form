@@ -1,0 +1,195 @@
+01-login.php
+
+
+<form action="02-handel-login.php" method="POST">
+	
+	<input type="text" name="username" placeholder="username">
+	
+	<input type="password" name="password" placeholder="password">
+	<input type="submit" value="submit">
+</form>
+
+<!--========================== -->
+
+02-handel-login.php
+
+
+<?php
+
+
+$username = 'abou';
+$password = 'abou';
+
+session_start();
+
+
+if (isset($_SESSION['abou'])) {
+
+	echo "welcome mr. " . $_SESSION['abou'] . "<br>";
+
+	echo "<a href='04-items.php'>Go Check Items</a>" ;
+
+}else{
+	if($_POST['username'] == $username  && $_POST['password'] == $password  ){
+
+		$_SESSION['abou'] = $username;
+		echo "welcome mr. " . $_SESSION['abou']  . "<br>";
+		echo "<a href='04-items.php'>Gooo Check Items</a>" ;
+
+
+
+		
+		// echo "<script>location.href='03-welcome.php'</script>" ; 
+	}else{
+		
+
+		echo "<script> alert('username or password incorrect!')</script>";
+
+		echo "<script>location.href='01-login.php'</script>";
+	}
+}
+
+
+// ===================================
+
+
+04-items.php
+
+
+
+<?php
+
+session_start();
+
+
+?>
+<!DOCTYPE html>
+<html>
+<head>
+	<style> 
+		input[type='number'] { 
+   
+    	-moz-appearance: textfield;
+   
+		}
+
+	</style>
+</head>
+<body>
+
+<?php
+	if (isset($_SESSION['abou'])) {
+
+?>
+		<form  action="05-calculation.php" method="POST" class="price" >
+
+			<input type="text"  name="price" placeholder="ENTER PRICE"   >
+			<input type="text" name="amount" placeholder="ENTER AMOUNT" >
+			<input type="submit" name="select" value="SELECT">
+
+		</form>
+<?php
+	}else{
+		
+		echo "<script> location.href='01-login.php'</script>";
+
+	
+}
+?>
+
+</body>
+</html>
+	
+
+
+<!-- pattern="\d+" min="0" -->
+
+
+<!-- ========================== -->
+
+
+05-calculation.php
+
+
+
+<?php
+
+	session_start();
+
+if (isset($_SESSION['abou'])) {
+	
+	$price = $_POST['price'];
+	$amount = $_POST['amount'];
+
+	if (is_numeric($price ) != true ||  is_numeric($amount) != true){
+
+		echo "YOU SHOULD ENTER NUMBERS ONLY No Strings.. <br>";
+		echo "<a href='04-items.php'>go back</a>" ;
+		
+	
+
+	}elseif ($price < 0 || $amount < 0 ) {
+			echo "PLEASE ENTER   +ve VALUE <BR>";
+			echo "<a href='04-items.php'>go back</a>" ;
+			
+	}else{
+		
+
+
+		$total = $price * $amount;
+		$discount_10 = ($total-($total * 0.10));
+		$discount_15 = ($total-($total * 0.15));
+
+
+
+
+		
+		if ($total<0) {
+			echo "You Entered A -ve Value <br> SORRY , PURCHASE is not allowed <BR> ";
+			echo "PLEASE ENTER a +ve VALUE <BR>";
+			echo "<a href='04-items.php'>go back</a>" ;
+
+		} else if ($total > 1000) {
+			echo "Total price is " . $total . " $.<br>";
+
+			echo "You have 15% discount - Please pay Only <br> " . round($discount_15, 2)  . " $ <br>"; 
+			echo "<a href='06-logout.php'>logout</a>" ;
+		} else if ($total <= 1000) { 
+
+			echo "Total price is " . $total . " $.<br>";
+
+			echo "You have 10% discount - Please pay Only <br>" . round($discount_10, 2)  . " $ <br>"; 
+			echo "<a href='06-logout.php'>logout</a>" ;
+			
+		}
+	}
+	
+}else{
+
+	echo "<script> location.href='01-login.php'</script>";
+
+}	
+
+
+	
+// ===================================
+
+06-logout.php
+
+<?php
+
+session_start();
+
+if (isset($_SESSION['abou'])) {
+
+	session_destroy();
+
+	echo "<script> location.href='01-login.php'</script>";
+}else{
+
+	echo "<script> location.href='01-login.php'</script>";
+}
+
+
+
+// =============================
