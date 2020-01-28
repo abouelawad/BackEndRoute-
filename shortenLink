@@ -1,0 +1,315 @@
+01-loginform.php
+
+<form  action="03-handellogin.php" method="get">
+
+  <h1>Welcome</h1>
+  <p>Please Login Here</p>
+  <input type="email" name="email" placeholder="email">
+  <input type="password" name="password" placeholder="password">
+  <input type="submit" value="login">
+
+  <p>New Member !</p>
+  <button type="submit" formaction="02-register.php">register</button>
+
+</form>
+
+//====================================
+
+02-register.php
+
+<?php
+
+session_start();
+include 'connectToDataBase.php';
+
+$email = $_GET['email'];
+$password = $_GET['password'];
+
+
+if (filter_var($email, FILTER_VALIDATE_EMAIL)
+	    && ctype_alnum($password) // numbers & digits only
+    ){
+
+      $query = "INSERT INTO users
+                (email , password)
+                values
+                ('$email' , '$password' )";
+
+      $con->query($query);
+
+      $_SESSION['email']=$email ;
+
+      header('location:04-form.php');
+} else
+
+
+
+header('location:01-loginform.php');
+
+
+
+
+
+
+?>
+//===============================================
+03-handellogin.php
+
+<?php
+session_start();
+include 'connectToDataBase.php';
+
+$email = $_GET['email'];
+$password = $_GET['password'];
+
+$query = "select * from users
+        where
+        email = '$email' and password = '$password'  ";
+
+$result = $con->query($query);
+
+
+if($result->num_rows>0){
+
+	$_SESSION['email'] = $email ;
+
+header('location:04-form.php');
+
+
+}else{
+
+	echo "<script> alert('username or password incorrect!')</script>";
+
+
+	echo "<script>location.href='01-loginform.php'</script>";
+
+}
+
+ ?>
+ 
+ 
+//==========================================
+
+04-form.php
+
+
+<?php
+session_start();
+if(isset($_SESSION['email'])){
+
+
+
+?>
+
+
+<form action="05-handelform.php">
+		
+		<input type="text" name="long-link" placeholder="enter your link" style="width: 500px">
+		
+		<input type="submit" value="GET SHORTEN">
+
+		
+	</form>
+
+	<?php
+
+}else{
+
+	echo "<script> alert('PLEASE LOGIN !')</script>";
+
+
+	echo "<script>location.href='01-loginform.php'</script>";
+
+}
+
+
+
+	?>
+  
+  //============================================
+  05-handelform.php
+  
+  <?php
+session_start();
+	if (isset($_SESSION['email'])) {
+	
+
+
+	include('connectToDataBase.php');
+	include 'random.php';
+
+	$longLink = $_GET['long-link'];
+
+
+	//search condition
+
+
+	//if exists GET IT
+
+	$check = " select longLink ,  shortenLink
+				from links
+				where longLink = '$longLink' ";
+
+	$ifExist = $con->query($check);
+
+
+		if($ifExist->num_rows>0){
+
+
+				 while ($row = $ifExist->fetch_assoc()) {
+
+				 ?>
+
+				 <form >
+				  <p>longLink</p>
+				  <input type="text" value="<?php echo $row['longLink']?>" style="width: 500px">
+				  <p>shortLink</p>
+				  <input type="text" value="<?php echo $row['shortenLink']?>" style="width: 500px">
+
+				  <p>get another link</p>
+				   <button type="submit" formaction="04-form.php">GET LINK</button>
+				  <P>To Log out</P> 
+				    <button type="submit" formaction="06-logout.php">Log out</button>
+				   
+
+				 </form>
+
+
+				 <?php 
+				}
+		}else{
+
+
+
+			//==========================================
+
+			$query = " INSERT INTO links
+			(longLink , shortenLink)
+			VALUES
+			('$longLink' , '$shortenLink' )";
+
+
+			$con->query($query);
+
+
+			//==========================================
+
+
+
+			$query2 = "select * from links where longLink = '$longLink' ";
+
+			$result = $con->query($query2);
+
+
+			if($result->num_rows>0){
+			 while ($row = $result->fetch_assoc()) {
+		?>
+
+			 <form >
+			  <p>longLink</p>
+			  <input type="text" value="<?php echo $row['longLink']?>" style="width: 500px">
+			  <p>shortLink</p>
+			  <input type="text" value="<?php echo $row['shortenLink']?>" style="width: 500px">
+
+			  <p>get another link</p>
+				   <button type="submit" formaction="04-form.php">GET LINK</button>
+
+			  <P>To Log out</P>
+			    <button type="submit" formaction="06-logout.php">Log out</button>
+			
+			 </form>
+		 <?php 
+			 }
+			}
+
+		}
+
+}else{
+
+
+	echo "<script>location.href='01-loginform.php'</script>";
+}
+
+ 
+
+ // header('location:homePage.php');
+
+
+?>
+
+//=======================================
+
+06-logout.php
+
+<?php
+
+session_start();
+
+if (isset($_SESSION['email'])) {
+
+	session_destroy();
+
+	
+	echo "<script>location.href='01-loginform.php'</script>";
+}
+
+?>
+
+//==============================================
+
+
+connectToDataBase.php
+
+<?php
+$servername = "localhost";
+$dbusername = "root";
+$dbpassword = "";
+$dbname = "shorten";
+
+$con = new mysqli($servername , $dbusername , $dbpassword ,$dbname);
+
+
+
+?>
+
+//=========================================
+
+random.php
+
+
+
+<?php 
+$n=10; 
+function getlink($n) { 
+    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'; 
+    $randomString = ''; 
+
+
+  
+    for ($i = 0; $i < $n; $i++) { 
+        $index = rand(0, strlen($characters) - 1);
+        
+        $randomString .= $characters[$index];
+
+        
+
+    } 
+
+  
+    return $randomString; 
+} 
+
+$link = getlink($n);
+
+// echo $link . "<br/>";
+ 
+$shortenLink = "localhost/bit/";
+$shortenLink .= $link;
+
+
+
+  
+
+
+
+
